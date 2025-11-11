@@ -1,0 +1,44 @@
+.cursorText {
+  position: fixed;
+  width: 120px;
+  height: 120px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cursorText.visible {
+  opacity: 1;
+}
+
+.cursorSvg {
+  width: 100%;
+  height: 100%;
+  animation: rotate 20s linear infinite;
+}
+
+.cursorTextPath {
+  font-size: 12px;
+  font-weight: 600;
+  fill: #14B8A6;
+  letter-spacing: 2px;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Ocultar en dispositivos móviles */
+@media (max-width: 1023px) {
+  .cursorText {
+    display: none !important;
+  }
+}
+
