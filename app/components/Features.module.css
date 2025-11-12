@@ -100,6 +100,42 @@
   margin: 0 auto;
   animation: fadeInUp 0.8s ease-out forwards;
   opacity: 0;
+  cursor: default;
+}
+
+.titleWrapper {
+  display: inline-block;
+}
+
+.titleLetter {
+  display: inline-block;
+  transition: transform 0.2s ease-out;
+  transform-origin: center;
+  cursor: default;
+}
+
+.titleLetter:hover {
+  transform: translate(4px, -6px) rotate(-5deg) scaleY(1.3) scaleX(0.9);
+}
+
+.titleLetter:nth-child(3n):hover {
+  transform: translate(-4px, -4px) rotate(5deg) scaleY(0.7) scaleX(1.1);
+}
+
+.titleLetter:nth-child(5n):hover {
+  transform: translate(3px, 5px) rotate(-4deg) scaleY(1.25) scaleX(0.95);
+}
+
+.titleLetter:nth-child(7n):hover {
+  transform: translate(-3px, 6px) rotate(-6deg) scaleY(1.35) scaleX(0.85);
+}
+
+.titleLetter:nth-child(11n):hover {
+  transform: translate(5px, 3px) rotate(4deg) scaleY(0.75) scaleX(1.15);
+}
+
+.titleLetter:nth-child(2n):hover {
+  transform: translate(-3px, -5px) rotate(3deg) scaleY(1.2) scaleX(1.05);
 }
 
 @media (min-width: 640px) {
@@ -225,6 +261,21 @@
   background: linear-gradient(135deg, #E6F7F5 0%, #D1F2EB 100%);
   color: #14B8A6;
   box-shadow: 0 4px 20px rgba(20, 184, 166, 0.15);
+  animation: fadeInScale 0.6s ease-out forwards;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.featureCard:nth-child(1) .iconWrapper {
+  animation-delay: 0.3s;
+}
+
+.featureCard:nth-child(2) .iconWrapper {
+  animation-delay: 0.5s;
+}
+
+.featureCard:nth-child(3) .iconWrapper {
+  animation-delay: 0.7s;
 }
 
 .featureCard:hover .iconWrapper {
@@ -239,6 +290,20 @@
   margin-bottom: 1rem;
   text-align: center;
   line-height: 1.2;
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.featureCard:nth-child(1) .featureTitle {
+  animation-delay: 0.4s;
+}
+
+.featureCard:nth-child(2) .featureTitle {
+  animation-delay: 0.6s;
+}
+
+.featureCard:nth-child(3) .featureTitle {
+  animation-delay: 0.8s;
 }
 
 @media (min-width: 640px) {
@@ -253,6 +318,20 @@
   color: #4b5563;
   text-align: center;
   line-height: 1.75;
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.featureCard:nth-child(1) .featureDescription {
+  animation-delay: 0.5s;
+}
+
+.featureCard:nth-child(2) .featureDescription {
+  animation-delay: 0.7s;
+}
+
+.featureCard:nth-child(3) .featureDescription {
+  animation-delay: 0.9s;
 }
 
 /* Animations */
@@ -264,6 +343,17 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 

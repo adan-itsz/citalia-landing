@@ -29,6 +29,8 @@ const features: Feature[] = [
 ];
 
 export default function Features() {
+  const titleText = "¿Cuántas horas pierdes cada semana agendando citas?";
+  
   return (
     <section className={styles.featuresSection}>
       {/* Card con fondo blanco y bordes redondeados */}
@@ -51,7 +53,17 @@ export default function Features() {
           <div className={styles.headerSection}>
             {/* Título - Enfoque en el dolor */}
             <h2 className={styles.mainTitle}>
-              ¿Cuántas horas pierdes cada semana agendando citas?
+              <span className={styles.titleWrapper}>
+                {titleText.split('').map((char, index) => (
+                  <span 
+                    key={index} 
+                    className={styles.titleLetter}
+                    style={{ '--index': index } as React.CSSProperties}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </span>
+                ))}
+              </span>
             </h2>
             <p className={styles.subtitle}>
               Llamadas que interrumpen tu consulta. Mensajes que se pierden. Pacientes que olvidan su cita. Cada error te cuesta tiempo, dinero y la confianza de tus pacientes.

@@ -54,6 +54,42 @@
   margin: 0 auto;
   animation: fadeInUp 0.8s ease-out forwards;
   opacity: 0;
+  cursor: default;
+}
+
+.titleWrapper {
+  display: inline-block;
+}
+
+.titleLetter {
+  display: inline-block;
+  transition: transform 0.2s ease-out;
+  transform-origin: center;
+  cursor: default;
+}
+
+.titleLetter:hover {
+  transform: translate(4px, -6px) rotate(-5deg) scaleY(1.3) scaleX(0.9);
+}
+
+.titleLetter:nth-child(3n):hover {
+  transform: translate(-4px, -4px) rotate(5deg) scaleY(0.7) scaleX(1.1);
+}
+
+.titleLetter:nth-child(5n):hover {
+  transform: translate(3px, 5px) rotate(-4deg) scaleY(1.25) scaleX(0.95);
+}
+
+.titleLetter:nth-child(7n):hover {
+  transform: translate(-3px, 6px) rotate(-6deg) scaleY(1.35) scaleX(0.85);
+}
+
+.titleLetter:nth-child(11n):hover {
+  transform: translate(5px, 3px) rotate(4deg) scaleY(0.75) scaleX(1.15);
+}
+
+.titleLetter:nth-child(2n):hover {
+  transform: translate(-3px, -5px) rotate(3deg) scaleY(1.2) scaleX(1.05);
 }
 
 @media (min-width: 640px) {
@@ -168,7 +204,6 @@
   position: absolute;
   top: -0.5rem;
   left: 50%;
-  transform: translateX(-50%);
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
@@ -181,14 +216,30 @@
   font-weight: 700;
   box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
   z-index: 2;
+  animation: fadeInScaleNumber 0.6s ease-out forwards;
+  opacity: 0;
+  transform: translateX(-50%) scale(0.8);
+}
+
+.stepCard:nth-child(1) .stepNumber {
+  animation-delay: 0.3s;
+}
+
+.stepCard:nth-child(2) .stepNumber {
+  animation-delay: 0.5s;
+}
+
+.stepCard:nth-child(3) .stepNumber {
+  animation-delay: 0.7s;
 }
 
 @media (min-width: 768px) {
   .stepNumber {
     position: static;
-    transform: none;
     margin-right: 2rem;
     flex-shrink: 0;
+    transform: scale(0.8);
+    animation: fadeInScale 0.6s ease-out forwards;
   }
 }
 
@@ -214,6 +265,21 @@
   background: linear-gradient(135deg, #E6F7F5 0%, #D1F2EB 100%);
   color: #14B8A6;
   box-shadow: 0 4px 20px rgba(20, 184, 166, 0.15);
+  animation: fadeInScale 0.6s ease-out forwards;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.stepCard:nth-child(1) .stepIconWrapper {
+  animation-delay: 0.4s;
+}
+
+.stepCard:nth-child(2) .stepIconWrapper {
+  animation-delay: 0.6s;
+}
+
+.stepCard:nth-child(3) .stepIconWrapper {
+  animation-delay: 0.8s;
 }
 
 /* Step Content */
@@ -227,6 +293,20 @@
   color: #111827;
   margin-bottom: 0.75rem;
   line-height: 1.3;
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.stepCard:nth-child(1) .stepTitle {
+  animation-delay: 0.5s;
+}
+
+.stepCard:nth-child(2) .stepTitle {
+  animation-delay: 0.7s;
+}
+
+.stepCard:nth-child(3) .stepTitle {
+  animation-delay: 0.9s;
 }
 
 @media (min-width: 640px) {
@@ -239,6 +319,20 @@
   font-size: 1rem;
   color: #4b5563;
   line-height: 1.75;
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.stepCard:nth-child(1) .stepDescription {
+  animation-delay: 0.6s;
+}
+
+.stepCard:nth-child(2) .stepDescription {
+  animation-delay: 0.8s;
+}
+
+.stepCard:nth-child(3) .stepDescription {
+  animation-delay: 1s;
 }
 
 /* Connector Line */
@@ -261,6 +355,7 @@
 
 /* CTA Container */
 .ctaContainer {
+  padding-bottom: 8rem;
   text-align: center;
   margin-top: 4rem;
   animation: fadeInUp 0.8s ease-out forwards;
@@ -310,6 +405,64 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInScaleNumber {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes letterDistort {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scaleY(1);
+  }
+  50% {
+    transform: translate(2px, -3px) rotate(-2deg) scaleY(1.1);
+  }
+  100% {
+    transform: translate(1px, -1px) rotate(-1deg) scaleY(1.05);
+  }
+}
+
+@keyframes letterDistortAlt1 {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scaleY(1);
+  }
+  50% {
+    transform: translate(-2px, -2px) rotate(2deg) scaleY(0.9);
+  }
+  100% {
+    transform: translate(-1px, -1px) rotate(1.5deg) scaleY(0.95);
+  }
+}
+
+@keyframes letterDistortAlt2 {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scaleY(1);
+  }
+  50% {
+    transform: translate(1px, 2px) rotate(-1deg) scaleY(1.08);
+  }
+  100% {
+    transform: translate(0.5px, 1px) rotate(-0.5deg) scaleY(1.04);
   }
 }
 

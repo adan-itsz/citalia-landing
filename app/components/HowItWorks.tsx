@@ -34,6 +34,8 @@ const steps: Step[] = [
 ];
 
 export default function HowItWorks() {
+  const titleText = "Tu agenda médica, en piloto automático";
+  
   return (
     <section className={styles.howItWorksSection}>
       <div className={styles.howItWorksCard}>
@@ -42,7 +44,17 @@ export default function HowItWorks() {
           {/* Header */}
           <div className={styles.headerSection}>
             <h2 className={styles.mainTitle}>
-              Tu agenda médica, en piloto automático
+              <span className={styles.titleWrapper}>
+                {titleText.split('').map((char, index) => (
+                  <span 
+                    key={index} 
+                    className={styles.titleLetter}
+                    style={{ '--index': index } as React.CSSProperties}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </span>
+                ))}
+              </span>
             </h2>
             <p className={styles.subtitle}>
               CitaLía conecta directamente con tu Google Calendar, coordinando todo el flujo de citas sin que tengas que mover un dedo.

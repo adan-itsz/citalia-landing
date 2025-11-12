@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Logo from './Logo';
 
 interface Message {
@@ -82,6 +82,10 @@ const messages: Message[] = [
 export default function WhatsAppChat() {
   const [visibleMessages, setVisibleMessages] = useState<number[]>([]);
   const [isTyping, setIsTyping] = useState(false);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const [isAtBottom, setIsAtBottom] = useState(true);
+  const isUserScrollingRef = useRef(false);
+  const touchStartYRef = useRef(0);
 
   useEffect(() => {
     let mounted = true;
@@ -152,6 +156,150 @@ export default function WhatsAppChat() {
     };
   }, []);
 
+  // Función para verificar si está al final del scroll
+  const checkIfAtBottom = () => {
+    const container = messagesContainerRef.current;
+    if (!container) return true;
+    
+    const threshold = 50; // Margen de error en píxeles
+    const isAtBottom = 
+      container.scrollHeight - container.scrollTop - container.clientHeight <= threshold;
+    return isAtBottom;
+  };
+
+  // Scroll inicial al final cuando se monta el componente
+  useEffect(() => {
+    if (messagesContainerRef.current) {
+      const container = messagesContainerRef.current;
+      setTimeout(() => {
+        container.scrollTop = container.scrollHeight;
+        setIsAtBottom(true);
+      }, 100);
+    }
+  }, []);
+
+  // Scroll automático cuando se agregan mensajes o cuando está escribiendo
+  useEffect(() => {
+    if (isAtBottom && messagesContainerRef.current && !isUserScrollingRef.current) {
+      const container = messagesContainerRef.current;
+      // Pequeño delay para asegurar que el DOM se haya actualizado
+      requestAnimationFrame(() => {
+        if (container) {
+          container.scrollTop = container.scrollHeight;
+        }
+      });
+    }
+  }, [visibleMessages, isTyping, isAtBottom]);
+
+  // Detectar scroll manual del usuario
+  useEffect(() => {
+    const container = messagesContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      // Solo actualizar el estado si el usuario está haciendo scroll manual
+      if (isUserScrollingRef.current) {
+        const atBottom = checkIfAtBottom();
+        setIsAtBottom(atBottom);
+        if (atBottom) {
+          // Si llegó al final, permitir que el scroll automático vuelva a funcionar
+          setTimeout(() => {
+            isUserScrollingRef.current = false;
+          }, 200);
+        }
+      }
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      const container = messagesContainerRef.current;
+      if (!container) return;
+
+      const currentScrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight;
+      const clientHeight = container.clientHeight;
+      const isCurrentlyAtBottom = scrollHeight - currentScrollTop - clientHeight <= 50;
+
+      // Si está al final y el usuario intenta hacer scroll hacia abajo, prevenir
+      if (isCurrentlyAtBottom && e.deltaY > 0) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+      
+      // Si el usuario hace scroll hacia arriba, permitirlo y marcar que no está al final
+      if (e.deltaY < 0) {
+        isUserScrollingRef.current = true;
+        setIsAtBottom(false);
+      } else if (e.deltaY > 0) {
+        // Scroll hacia abajo - marcar que el usuario está haciendo scroll manual
+        isUserScrollingRef.current = true;
+        // Verificar después de un pequeño delay si llegó al final
+        setTimeout(() => {
+          const atBottom = checkIfAtBottom();
+          setIsAtBottom(atBottom);
+          if (atBottom) {
+            isUserScrollingRef.current = false;
+          }
+        }, 150);
+      }
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartYRef.current = e.touches[0].clientY;
+      isUserScrollingRef.current = true;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const container = messagesContainerRef.current;
+      if (!container) return;
+
+      const touch = e.touches[0];
+      if (!touch) return;
+
+      const touchY = touch.clientY;
+      const deltaY = touchY - touchStartYRef.current;
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight;
+      const clientHeight = container.clientHeight;
+      const isCurrentlyAtBottom = scrollHeight - scrollTop - clientHeight <= 50;
+      
+      // Si está al final y el usuario intenta hacer scroll hacia abajo (arrastrar hacia abajo), prevenir
+      if (isCurrentlyAtBottom && deltaY < 0) {
+        e.preventDefault();
+        return false;
+      }
+      
+      // Si el usuario hace scroll hacia arriba, marcar que no está al final
+      if (deltaY > 0) {
+        setIsAtBottom(false);
+      }
+    };
+
+    const handleTouchEnd = () => {
+      setTimeout(() => {
+        const atBottom = checkIfAtBottom();
+        setIsAtBottom(atBottom);
+        if (atBottom) {
+          isUserScrollingRef.current = false;
+        }
+      }, 100);
+    };
+
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    container.addEventListener('wheel', handleWheel, { passive: false });
+    container.addEventListener('touchstart', handleTouchStart, { passive: true });
+    container.addEventListener('touchmove', handleTouchMove, { passive: false });
+    container.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+      container.removeEventListener('wheel', handleWheel);
+      container.removeEventListener('touchstart', handleTouchStart);
+      container.removeEventListener('touchmove', handleTouchMove);
+      container.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [isAtBottom]);
+
   return (
     <div className="w-full max-w-xs mx-auto sm:max-w-sm lg:max-w-xs">
       {/* Contenedor del chat */}
@@ -182,6 +330,7 @@ export default function WhatsAppChat() {
 
         {/* Área de mensajes */}
         <div 
+          ref={messagesContainerRef}
           className="px-3 py-4 space-y-3 relative flex-1 overflow-y-auto"
           style={{ 
             backgroundColor: '#ECE5DD',
@@ -316,4 +465,5 @@ export default function WhatsAppChat() {
     </div>
   );
 }
+
 

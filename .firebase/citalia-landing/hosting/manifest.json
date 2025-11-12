@@ -1,0 +1,17 @@
+{
+  "name": "CitaLía - Asistente médico inteligente",
+  "short_name": "CitaLía",
+  "description": "Tu asistente médico inteligente, en el chat que ya usas todos los días",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#14B8A6",
+  "icons": [
+    {
+      "src": "/images/icono.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ]
+}
+
