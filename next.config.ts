@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    unoptimized: true, // Desactiva la optimización de imágenes para Firebase
+  },
 };
 
 export default nextConfig;

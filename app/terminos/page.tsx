@@ -1,5 +1,8 @@
 import React from 'react';
+import { metadata } from './metadata';
 import styles from './page.module.css';
+
+export { metadata };
 
 export default function Terminos() {
   return (

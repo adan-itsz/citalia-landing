@@ -88,13 +88,18 @@ export default function HowItWorks() {
             ))}
           </div>
 
-          {/* CTA */}
-          <div className={styles.ctaContainer}>
-            <button className={styles.ctaButton}>
-              <Logo size={24} checkmarkColor="#FFFFFF" />
-              <span>Quiero que CitaLía maneje mi agenda</span>
-            </button>
-          </div>
+                  {/* CTA */}
+                  <div className={styles.ctaContainer}>
+                    <a
+                      href="https://wa.me/523322541366?text=Hola,%20me%20interesa%20empezar%20a%20utilizar%20CitaLía%20en%20mi%20consultorio"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.ctaButton}
+                    >
+                      <Logo size={24} checkmarkColor="#FFFFFF" />
+                      <span>Quiero que CitaLía maneje mi agenda</span>
+                    </a>
+                  </div>
         </div>
       </div>
     </section>

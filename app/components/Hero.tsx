@@ -113,16 +113,20 @@ export default function Hero() {
 
             {/* Botón CTA */}
             <div className="flex justify-center lg:justify-start animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-              <button 
+              <a
+                href="https://wa.me/523322541366?text=Hola,%20me%20interesa%20empezar%20a%20utilizar%20CitaLía%20en%20mi%20consultorio"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-3 px-6 py-4 rounded-xl text-white font-semibold text-base sm:text-lg transition-all hover:shadow-lg hover:scale-105 cursor-pointer"
                 style={{ 
                   backgroundColor: '#14B8A6',
-                  boxShadow: '0 4px 14px rgba(20, 184, 166, 0.3)'
+                  boxShadow: '0 4px 14px rgba(20, 184, 166, 0.3)',
+                  textDecoration: 'none'
                 }}
               >
                 <Logo size={24} checkmarkColor="#FFFFFF" />
                 <span>Quiero usar CitaLía</span>
-              </button>
+              </a>
             </div>
           </div>
 
